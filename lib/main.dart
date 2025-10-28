@@ -253,30 +253,30 @@ class HomeScreen extends StatelessWidget {
                           MediaQuery.of(context).size.width > 600 ? 2 : 1,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
-                      children: [
-                        buildProductCard(
-                          'Placeholder Product 1',
-                          '£10.00',
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                          context,
+                      children: const [
+                        ProductCard(
+                          title: 'Placeholder Product 1',
+                          price: '£10.00',
+                          imageUrl:
+                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
                         ),
-                        buildProductCard(
-                          'Placeholder Product 2',
-                          '£15.00',
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                          context,
+                        ProductCard(
+                          title: 'Placeholder Product 2',
+                          price: '£15.00',
+                          imageUrl:
+                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
                         ),
-                        buildProductCard(
-                          'Placeholder Product 3',
-                          '£20.00',
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                          context,
+                        ProductCard(
+                          title: 'Placeholder Product 3',
+                          price: '£20.00',
+                          imageUrl:
+                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
                         ),
-                        buildProductCard(
-                          'Placeholder Product 4',
-                          '£25.00',
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                          context,
+                        ProductCard(
+                          title: 'Placeholder Product 4',
+                          price: '£25.00',
+                          imageUrl:
+                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
                         ),
                       ],
                     ),
@@ -334,16 +334,25 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
+}
 
-  Widget buildProductCard(
-    String title,
-    String price,
-    String imageUrl,
-    BuildContext context,
-  ) {
+class ProductCard extends StatelessWidget {
+  final String title;
+  final String price;
+  final String imageUrl;
+
+  const ProductCard({
+    super.key,
+    required this.title,
+    required this.price,
+    required this.imageUrl,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        navigateToProduct(context);
+        Navigator.pushNamed(context, '/product');
       },
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
