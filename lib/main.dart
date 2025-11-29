@@ -459,9 +459,8 @@ class HomeScreen extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
-                        'Union Shop is your campus store for branded merchandise, stationery, '
-                        'and local gifts. Open Monday–Friday 9am–5pm. '
-                        'Have questions? Email us at support@unionshop.example or call (01234) 567-890.',
+                        'Union Shop is your campus store for branded merchandise, stationery and local gifts.'
+                        'Have questions? Email us at support@unionshop.gmail.com or call (01234) 567-890.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.grey[400],
