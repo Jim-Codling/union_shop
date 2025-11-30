@@ -162,43 +162,37 @@ class CollectionsPage extends StatelessWidget {
                   children: [
                     _CollectionCard(
                       title: 'Branded Merchandise',
-                      imageUrl:
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                      imageUrl: 'assets/branded_merch_1.png',
                       onTap: () => navigateToCollectionDetail(
                           context, 'Branded Merchandise'),
                     ),
                     _CollectionCard(
                       title: 'Stationery',
-                      imageUrl:
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                      imageUrl: 'assets/stationary_1.png',
                       onTap: () =>
                           navigateToCollectionDetail(context, 'Stationery'),
                     ),
                     _CollectionCard(
                       title: 'Local Gifts',
-                      imageUrl:
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                      imageUrl: 'assets/local_gifts_1.png',
                       onTap: () =>
                           navigateToCollectionDetail(context, 'Local Gifts'),
                     ),
                     _CollectionCard(
                       title: 'Apparel',
-                      imageUrl:
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                      imageUrl: 'assets/apparel_1.png',
                       onTap: () =>
                           navigateToCollectionDetail(context, 'Apparel'),
                     ),
                     _CollectionCard(
                       title: 'Accessories',
-                      imageUrl:
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                      imageUrl: 'assets/accessories_1.png',
                       onTap: () =>
                           navigateToCollectionDetail(context, 'Accessories'),
                     ),
                     _CollectionCard(
                       title: 'Home & Living',
-                      imageUrl:
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                      imageUrl: 'assets/home_and_living_1.png',
                       onTap: () =>
                           navigateToCollectionDetail(context, 'Home & Living'),
                     ),

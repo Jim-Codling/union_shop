@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_us_page.dart';
 import 'package:union_shop/collections_page.dart';
+import 'package:union_shop/collection_detail_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -26,6 +27,11 @@ class UnionShopApp extends StatelessWidget {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutUsPage(),
         '/collections': (context) => const CollectionsPage(),
+        '/collection-detail': (context) {
+          final collectionName =
+              ModalRoute.of(context)?.settings.arguments as String?;
+          return CollectionDetailPage(collectionName: collectionName ?? '');
+        },
       },
     );
   }
@@ -111,10 +117,11 @@ class HomeScreen extends StatelessWidget {
                                   onPressed: () => Navigator.pushNamed(
                                       context, '/collections'),
                                   style: TextButton.styleFrom(
-                                    foregroundColor: Colors.grey,
-                                  ),
+                                      foregroundColor: Colors.white,
+                                      backgroundColor: Colors.purple),
                                   child: const Text('Collections'),
                                 ),
+                                const SizedBox(width: 16),
                                 // Top link to the About page
                                 TextButton(
                                   onPressed: () => navigateToAbout(context),
@@ -123,6 +130,7 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   child: const Text('About Us'),
                                 ),
+                                const Spacer(),
                                 IconButton(
                                   icon: const Icon(
                                     Icons.search,
