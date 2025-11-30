@@ -3,6 +3,7 @@ import 'package:union_shop/product_page.dart';
 import 'package:union_shop/about_us_page.dart';
 import 'package:union_shop/collections_page.dart';
 import 'package:union_shop/collection_detail_page.dart';
+import 'package:union_shop/sale_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -27,6 +28,7 @@ class UnionShopApp extends StatelessWidget {
         '/product': (context) => const ProductPage(),
         '/about': (context) => const AboutUsPage(),
         '/collections': (context) => const CollectionsPage(),
+        '/sale': (context) => const SalePage(),
         '/collection-detail': (context) {
           final collectionName =
               ModalRoute.of(context)?.settings.arguments as String?;
@@ -120,6 +122,16 @@ class HomeScreen extends StatelessWidget {
                                       foregroundColor: Colors.white,
                                       backgroundColor: Colors.purple),
                                   child: const Text('Collections'),
+                                ),
+                                const SizedBox(width: 16),
+                                // Top link to the Sale page
+                                TextButton(
+                                  onPressed: () => Navigator.pushNamed(
+                                      context, '/sale'),
+                                  style: TextButton.styleFrom(
+                                    foregroundColor: Colors.red,
+                                  ),
+                                  child: const Text('Sale'),
                                 ),
                                 const SizedBox(width: 16),
                                 // Top link to the About page
@@ -400,7 +412,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                             _FooterLink(
                               label: 'Sale',
-                              onTap: placeholderCallbackForButtons,
+                              onTap: () => Navigator.pushNamed(
+                                  context, '/sale'),
                             ),
                           ],
                         ),
