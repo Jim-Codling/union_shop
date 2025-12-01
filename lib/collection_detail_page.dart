@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 
-class CollectionDetailPage extends StatelessWidget {
+class CollectionDetailPage extends StatefulWidget {
   final String collectionName;
 
   const CollectionDetailPage({super.key, required this.collectionName});
+
+  @override
+  State<CollectionDetailPage> createState() => _CollectionDetailPageState();
+}
+
+class _CollectionDetailPageState extends State<CollectionDetailPage> {
+  // single sort option control:
+  // values: 'none' | 'price_asc' | 'price_desc' | 'alpha_asc' | 'alpha_desc'
+  String _sortOption = 'none';
 
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
@@ -167,10 +176,46 @@ class CollectionDetailPage extends StatelessWidget {
     }
   }
 
+  double _priceFromString(String price) {
+    final cleaned = price.replaceAll(RegExp(r'[^0-9.]'), '');
+    return double.tryParse(cleaned) ?? 0.0;
+  }
+
+  List<Map<String, String>> _sortedProducts(String collectionName) {
+    final products =
+        List<Map<String, String>>.from(_getCollectionProducts(collectionName));
+
+    switch (_sortOption) {
+      case 'price_asc':
+        products.sort((a, b) => _priceFromString(a['price']!)
+            .compareTo(_priceFromString(b['price']!)));
+        break;
+      case 'price_desc':
+        products.sort((a, b) => _priceFromString(b['price']!)
+            .compareTo(_priceFromString(a['price']!)));
+        break;
+      case 'alpha_asc':
+        products.sort((a, b) =>
+            a['title']!.toLowerCase().compareTo(b['title']!.toLowerCase()));
+        break;
+      case 'alpha_desc':
+        products.sort((a, b) =>
+            b['title']!.toLowerCase().compareTo(a['title']!.toLowerCase()));
+        break;
+      case 'none':
+      default:
+        // leave original order
+        break;
+    }
+
+    return products;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final collectionName = widget.collectionName;
     final description = _getCollectionDescription(collectionName);
-    final products = _getCollectionProducts(collectionName);
+    final products = _sortedProducts(collectionName);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -258,6 +303,35 @@ class CollectionDetailPage extends StatelessWidget {
                         height: 1.6,
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 16),
+                  // Single dropdown combining sort field + direction
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text('Sort: '),
+                      const SizedBox(width: 8),
+                      DropdownButton<String>(
+                        value: _sortOption,
+                        items: const [
+                          DropdownMenuItem(value: 'none', child: Text('None')),
+                          DropdownMenuItem(
+                              value: 'price_asc',
+                              child: Text('Price, Ascending')),
+                          DropdownMenuItem(
+                              value: 'price_desc',
+                              child: Text('Price, Descending')),
+                          DropdownMenuItem(
+                              value: 'alpha_asc',
+                              child: Text('Alphabetical, A → Z')),
+                          DropdownMenuItem(
+                              value: 'alpha_desc',
+                              child: Text('Alphabetical, Z → A')),
+                        ],
+                        onChanged: (v) =>
+                            setState(() => _sortOption = v ?? 'none'),
+                      ),
+                    ],
                   ),
                 ],
               ),
