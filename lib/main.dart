@@ -119,15 +119,15 @@ class HomeScreen extends StatelessWidget {
                                   onPressed: () => Navigator.pushNamed(
                                       context, '/collections'),
                                   style: TextButton.styleFrom(
-                                      foregroundColor: Colors.white,
-                                      backgroundColor: Colors.purple),
+                                    foregroundColor: Colors.black,
+                                  ),
                                   child: const Text('Collections'),
                                 ),
                                 const SizedBox(width: 16),
                                 // Top link to the Sale page
                                 TextButton(
-                                  onPressed: () => Navigator.pushNamed(
-                                      context, '/sale'),
+                                  onPressed: () =>
+                                      Navigator.pushNamed(context, '/sale'),
                                   style: TextButton.styleFrom(
                                     foregroundColor: Colors.red,
                                   ),
@@ -412,8 +412,8 @@ class HomeScreen extends StatelessWidget {
                             ),
                             _FooterLink(
                               label: 'Sale',
-                              onTap: () => Navigator.pushNamed(
-                                  context, '/sale'),
+                              onTap: () =>
+                                  Navigator.pushNamed(context, '/sale'),
                             ),
                           ],
                         ),
