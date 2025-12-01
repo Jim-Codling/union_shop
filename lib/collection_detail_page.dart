@@ -14,6 +14,11 @@ class _CollectionDetailPageState extends State<CollectionDetailPage> {
   // values: 'none' | 'price_asc' | 'price_desc' | 'alpha_asc' | 'alpha_desc'
   String _sortOption = 'none';
 
+  // filter controls
+  // values: 'all' | 'under_10' | '10_20' | '20_30' | 'over_30'
+  String _filterOption = 'all';
+  String _searchQuery = '';
+
   void navigateToHome(BuildContext context) {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
@@ -211,11 +216,43 @@ class _CollectionDetailPageState extends State<CollectionDetailPage> {
     return products;
   }
 
+  // new: apply filter and search to a product list
+  List<Map<String, String>> _applyFilters(List<Map<String, String>> products) {
+    final query = _searchQuery.trim().toLowerCase();
+    return products.where((p) {
+      final price = _priceFromString(p['price']!);
+      // filter by selected price range
+      switch (_filterOption) {
+        case 'under_10':
+          if (!(price < 10.0)) return false;
+          break;
+        case '10_20':
+          if (!(price >= 10.0 && price < 20.0)) return false;
+          break;
+        case '20_30':
+          if (!(price >= 20.0 && price < 30.0)) return false;
+          break;
+        case 'over_30':
+          if (!(price >= 30.0)) return false;
+          break;
+        case 'all':
+        default:
+          break;
+      }
+      // search by title
+      if (query.isNotEmpty && !p['title']!.toLowerCase().contains(query)) {
+        return false;
+      }
+      return true;
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     final collectionName = widget.collectionName;
     final description = _getCollectionDescription(collectionName);
-    final products = _sortedProducts(collectionName);
+    final sorted = _sortedProducts(collectionName);
+    final products = _applyFilters(sorted);
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -305,33 +342,84 @@ class _CollectionDetailPageState extends State<CollectionDetailPage> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  // Single dropdown combining sort field + direction
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('Sort: '),
-                      const SizedBox(width: 8),
-                      DropdownButton<String>(
-                        value: _sortOption,
-                        items: const [
-                          DropdownMenuItem(value: 'none', child: Text('None')),
-                          DropdownMenuItem(
-                              value: 'price_asc',
-                              child: Text('Price, Ascending')),
-                          DropdownMenuItem(
-                              value: 'price_desc',
-                              child: Text('Price, Descending')),
-                          DropdownMenuItem(
-                              value: 'alpha_asc',
-                              child: Text('Alphabetical, A → Z')),
-                          DropdownMenuItem(
-                              value: 'alpha_desc',
-                              child: Text('Alphabetical, Z → A')),
-                        ],
-                        onChanged: (v) =>
-                            setState(() => _sortOption = v ?? 'none'),
-                      ),
-                    ],
+                  // Controls: sort + filter + search
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12.0),
+                    child: Wrap(
+                      alignment: WrapAlignment.center,
+                      spacing: 12,
+                      runSpacing: 8,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text('Sort: '),
+                            const SizedBox(width: 8),
+                            DropdownButton<String>(
+                              value: _sortOption,
+                              items: const [
+                                DropdownMenuItem(
+                                    value: 'none', child: Text('None')),
+                                DropdownMenuItem(
+                                    value: 'price_asc',
+                                    child: Text('Price, Ascending')),
+                                DropdownMenuItem(
+                                    value: 'price_desc',
+                                    child: Text('Price, Descending')),
+                                DropdownMenuItem(
+                                    value: 'alpha_asc',
+                                    child: Text('Alphabetical, A → Z')),
+                                DropdownMenuItem(
+                                    value: 'alpha_desc',
+                                    child: Text('Alphabetical, Z → A')),
+                              ],
+                              onChanged: (v) =>
+                                  setState(() => _sortOption = v ?? 'none'),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Text('Filter: '),
+                            const SizedBox(width: 8),
+                            DropdownButton<String>(
+                              value: _filterOption,
+                              items: const [
+                                DropdownMenuItem(
+                                    value: 'all', child: Text('All')),
+                                DropdownMenuItem(
+                                    value: 'under_10',
+                                    child: Text('Under £10')),
+                                DropdownMenuItem(
+                                    value: '10_20', child: Text('£10 - £20')),
+                                DropdownMenuItem(
+                                    value: '20_30', child: Text('£20 - £30')),
+                                DropdownMenuItem(
+                                    value: 'over_30', child: Text('Over £30')),
+                              ],
+                              onChanged: (v) =>
+                                  setState(() => _filterOption = v ?? 'all'),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          width: 220,
+                          child: TextField(
+                            decoration: InputDecoration(
+                              prefixIcon: const Icon(Icons.search),
+                              hintText: 'Search items',
+                              contentPadding: const EdgeInsets.symmetric(
+                                  vertical: 10, horizontal: 12),
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(6)),
+                              isDense: true,
+                            ),
+                            onChanged: (v) => setState(() => _searchQuery = v),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -343,24 +431,34 @@ class _CollectionDetailPageState extends State<CollectionDetailPage> {
               padding: const EdgeInsets.all(40.0),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 1200),
-                child: GridView.count(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount:
-                      MediaQuery.of(context).size.width > 900 ? 3 : 2,
-                  crossAxisSpacing: 24,
-                  mainAxisSpacing: 24,
-                  childAspectRatio: 0.75,
-                  children: products
-                      .map(
-                        (product) => _ProductCard(
-                          title: product['title']!,
-                          price: product['price']!,
-                          imageUrl: product['image']!,
+                child: products.isEmpty
+                    ? Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 40.0),
+                          child: Text(
+                            'No items match your filters.',
+                            style: TextStyle(color: Colors.grey[600]),
+                          ),
                         ),
                       )
-                      .toList(),
-                ),
+                    : GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount:
+                            MediaQuery.of(context).size.width > 900 ? 3 : 2,
+                        crossAxisSpacing: 24,
+                        mainAxisSpacing: 24,
+                        childAspectRatio: 0.75,
+                        children: products
+                            .map(
+                              (product) => _ProductCard(
+                                title: product['title']!,
+                                price: product['price']!,
+                                imageUrl: product['image']!,
+                              ),
+                            )
+                            .toList(),
+                      ),
               ),
             ),
 
