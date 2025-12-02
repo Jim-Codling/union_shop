@@ -5,6 +5,7 @@ import 'package:union_shop/collections_page.dart';
 import 'package:union_shop/collection_detail_page.dart';
 import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/widgets/app_header.dart';
+import 'package:union_shop/login_page.dart';
 
 void main() {
   runApp(const UnionShopApp());
@@ -35,6 +36,7 @@ class UnionShopApp extends StatelessWidget {
               ModalRoute.of(context)?.settings.arguments as String?;
           return CollectionDetailPage(collectionName: collectionName ?? '');
         },
+        '/login': (context) => const LoginPage(),
       },
     );
   }
@@ -381,29 +383,6 @@ class HomeScreen extends StatelessWidget {
                           color: Colors.grey[400],
                           fontSize: 12,
                         ),
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            'Made with ',
-                            style: TextStyle(
-                              color: Colors.grey[400],
-                              fontSize: 12,
-                            ),
-                          ),
-                          const Icon(
-                            Icons.favorite,
-                            size: 12,
-                            color: Colors.red,
-                          ),
-                          Text(
-                            ' by Union Shop',
-                            style: TextStyle(
-                              color: Colors.grey[400],
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
                       ),
                     ],
                   ),
