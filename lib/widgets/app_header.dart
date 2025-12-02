@@ -33,7 +33,8 @@ class AppHeader extends StatelessWidget {
                 children: [
                   GestureDetector(
                     onTap: () {
-                      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+                      Navigator.pushNamedAndRemoveUntil(
+                          context, '/', (route) => false);
                     },
                     child: Image.network(
                       'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
@@ -54,14 +55,24 @@ class AppHeader extends StatelessWidget {
                   ),
                   const Spacer(),
                   ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 600),
+                    constraints: const BoxConstraints(maxWidth: 700),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        // Home button (centered with other nav buttons)
+                        TextButton(
+                          onPressed: () => Navigator.pushNamedAndRemoveUntil(
+                              context, '/', (r) => false),
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.black,
+                          ),
+                          child: const Text('Home'),
+                        ),
+                        const SizedBox(width: 16),
                         // Top link to the Collections page
                         TextButton(
-                          onPressed: () => Navigator.pushNamed(
-                              context, '/collections'),
+                          onPressed: () =>
+                              Navigator.pushNamed(context, '/collections'),
                           style: TextButton.styleFrom(
                             foregroundColor: Colors.black,
                           ),

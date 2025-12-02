@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/widgets/app_header.dart';
 
 class SalePage extends StatelessWidget {
   const SalePage({super.key});
@@ -14,17 +15,11 @@ class SalePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sale'),
-        backgroundColor: const Color(0xFF4d2963),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => navigateToHome(context),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
+            const AppHeader(),
+
             // Sale hero
             Container(
               width: double.infinity,
