@@ -6,6 +6,7 @@ import 'package:union_shop/collection_detail_page.dart';
 import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/widgets/app_header.dart';
 import 'package:union_shop/login_page.dart';
+import 'dart:math';
 
 void main() {
   runApp(const UnionShopApp());
@@ -66,8 +67,72 @@ class HomeScreen extends StatelessWidget {
     // This is the event handler for buttons that don't work yet
   }
 
+  // Example product list (replace with your actual product data source)
+  List<Map<String, dynamic>> get allProducts => [
+        {
+          'title': 'Logo T-Shirt',
+          'price': '£18.00',
+          'imageUrl':
+              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+          'description':
+              'Classic t-shirt with university logo. Comfortable for everyday wear.',
+          'colors': ['White', 'Black', 'Navy'],
+          'sizes': ['S', 'M', 'L', 'XL'],
+        },
+        {
+          'title': 'Campus Hoodie',
+          'price': '£35.00',
+          'imageUrl':
+              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+          'description':
+              'Warm and cozy hoodie with campus branding. Perfect for chilly days.',
+          'colors': ['Grey', 'Black'],
+          'sizes': ['S', 'M', 'L', 'XL'],
+        },
+        {
+          'title': 'Premium Notebook',
+          'price': '£8.50',
+          'imageUrl':
+              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+          'description': 'High-quality notebook for notes and ideas.',
+        },
+        {
+          'title': 'Joggers',
+          'price': '£28.00',
+          'imageUrl':
+              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+          'description': 'Relaxed fit joggers for casual wear.',
+          'colors': ['Black', 'Grey'],
+          'sizes': ['S', 'M', 'L', 'XL'],
+        },
+        {
+          'title': 'Crew Neck Sweatshirt',
+          'price': '£32.00',
+          'imageUrl':
+              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+          'description': 'Classic crew neck sweatshirt with soft lining.',
+          'colors': ['Blue', 'Grey'],
+          'sizes': ['S', 'M', 'L', 'XL'],
+        },
+        {
+          'title': 'Canvas Backpack',
+          'price': '£42.00',
+          'imageUrl':
+              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+          'description': 'Durable canvas backpack for books and essentials.',
+        },
+      ];
+
+  List<Map<String, dynamic>> getRandomProducts(int count) {
+    final products = List<Map<String, dynamic>>.from(allProducts);
+    products.shuffle(Random());
+    return products.take(count).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
+    final randomProducts = getRandomProducts(4);
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -170,32 +235,55 @@ class HomeScreen extends StatelessWidget {
                           MediaQuery.of(context).size.width > 600 ? 2 : 1,
                       crossAxisSpacing: 24,
                       mainAxisSpacing: 48,
-                      children: const [
-                        ProductCard(
-                          title: 'Placeholder Product 1',
-                          price: '£10.00',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                        ),
-                        ProductCard(
-                          title: 'Placeholder Product 2',
-                          price: '£15.00',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                        ),
-                        ProductCard(
-                          title: 'Placeholder Product 3',
-                          price: '£20.00',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                        ),
-                        ProductCard(
-                          title: 'Placeholder Product 4',
-                          price: '£25.00',
-                          imageUrl:
-                              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                        ),
-                      ],
+                      children: randomProducts.map((product) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(
+                              context,
+                              '/product',
+                              arguments: product,
+                            );
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Image.network(
+                                  product['imageUrl']?.toString() ?? '',
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Container(
+                                      color: Colors.grey[300],
+                                      child: const Center(
+                                        child: Icon(Icons.image_not_supported,
+                                            color: Colors.grey),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    product['title']?.toString() ?? '',
+                                    style: const TextStyle(
+                                        fontSize: 14, color: Colors.black),
+                                    maxLines: 2,
+                                  ),
+                                  const SizedBox(height: 4),
+                                  Text(
+                                    product['price']?.toString() ?? '',
+                                    style: const TextStyle(
+                                        fontSize: 13, color: Colors.grey),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
                     ),
                   ],
                 ),
