@@ -27,7 +27,12 @@ class UnionShopApp extends StatelessWidget {
       initialRoute: '/',
       // App routes
       routes: {
-        '/product': (context) => const ProductPage(),
+        '/product': (context) {
+          final args = ModalRoute.of(context)?.settings.arguments
+                  as Map<String, dynamic>? ??
+              {};
+          return ProductPage.fromArguments(args);
+        },
         '/about': (context) => const AboutUsPage(),
         '/collections': (context) => const CollectionsPage(),
         '/sale': (context) => const SalePage(),
