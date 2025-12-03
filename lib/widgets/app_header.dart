@@ -159,7 +159,7 @@ class _AppHeaderState extends State<AppHeader> {
                                 minWidth: 32,
                                 minHeight: 32,
                               ),
-                              onPressed: _placeholderCallback,
+                              onPressed: () => Navigator.pushNamed(context, '/shopping-bag'),
                             ),
                             IconButton(
                               icon: const Icon(

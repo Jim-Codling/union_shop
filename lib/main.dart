@@ -6,6 +6,7 @@ import 'package:union_shop/collection_detail_page.dart';
 import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/widgets/app_header.dart';
 import 'package:union_shop/login_page.dart';
+import 'package:union_shop/shopping_bag_page.dart';
 import 'dart:math';
 
 void main() {
@@ -43,6 +44,7 @@ class UnionShopApp extends StatelessWidget {
           return CollectionDetailPage(collectionName: collectionName ?? '');
         },
         '/login': (context) => const LoginPage(),
+        '/shopping-bag': (context) => const ShoppingBagPage(),
       },
     );
   }
@@ -72,8 +74,7 @@ class HomeScreen extends StatelessWidget {
         {
           'title': 'Logo T-Shirt',
           'price': '£18.00',
-          'imageUrl':
-              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+          'imageUrl': 'assets/branded_merch_1.png',
           'description':
               'Classic t-shirt with university logo. Comfortable for everyday wear.',
           'colors': ['White', 'Black', 'Navy'],
@@ -151,7 +152,7 @@ class HomeScreen extends StatelessWidget {
                       decoration: const BoxDecoration(
                         image: DecorationImage(
                           image: NetworkImage(
-                            'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                            'assets/local_gifts_1.png',
                           ),
                           fit: BoxFit.cover,
                         ),
@@ -172,7 +173,7 @@ class HomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         const Text(
-                          'Placeholder Hero Title',
+                          'University of Portsmouth\nUnion Shop',
                           style: TextStyle(
                             fontSize: 32,
                             fontWeight: FontWeight.bold,
@@ -182,7 +183,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 16),
                         const Text(
-                          "This is placeholder text for the hero section.",
+                          "Browse our wide range of collections for all your campus needs. ",
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.white,
@@ -192,7 +193,9 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 32),
                         ElevatedButton(
-                          onPressed: placeholderCallbackForButtons,
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/collections');
+                          },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xFF4d2963),
                             foregroundColor: Colors.white,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/app_header.dart';
+import 'package:union_shop/shopping_bag_page.dart';
 
 class ProductPage extends StatefulWidget {
   final String title;
@@ -50,6 +51,29 @@ class _ProductPageState extends State<ProductPage> {
     if (widget.sizes != null && widget.sizes!.isNotEmpty) {
       _selectedSize = widget.sizes!.first;
     }
+  }
+
+  void _addToCart() {
+    // Check if the item already exists in the cart with same options
+    final existingIndex = cartItems.indexWhere((item) =>
+        item['title'] == widget.title &&
+        item['size'] == _selectedSize &&
+        item['color'] == _selectedColor);
+    if (existingIndex != -1) {
+      cartItems[existingIndex]['quantity'] += _quantity;
+    } else {
+      cartItems.add({
+        'title': widget.title,
+        'price': double.tryParse(widget.price.replaceAll('£', '')) ?? 0.0,
+        'quantity': _quantity,
+        'size': _selectedSize,
+        'color': _selectedColor,
+        'imageUrl': widget.imageUrl,
+      });
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Added to cart!')),
+    );
   }
 
   @override
@@ -184,13 +208,7 @@ class _ProductPageState extends State<ProductPage> {
                             SizedBox(
                               width: double.infinity,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  // Dummy add to cart
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Added to cart!')),
-                                  );
-                                },
+                                onPressed: _addToCart,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF4d2963),
                                   padding:
