@@ -305,148 +305,50 @@ class HomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 48, horizontal: 24),
               child: Column(
                 children: [
-                  // Footer content grid
-                  ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1200),
-                    child: GridView.count(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount:
-                          MediaQuery.of(context).size.width > 800 ? 4 : 2,
-                      crossAxisSpacing: 24,
-                      mainAxisSpacing: 32,
-                      children: [
-                        // Column 1: About
-                        Column(
+                  // Responsive footer columns
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      final isWide = constraints.maxWidth > 800;
+                      if (isWide) {
+                        // Desktop/tablet: use Row for columns
+                        return Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Text(
-                              'About Us',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.5,
-                              ),
+                            SizedBox(
+                              width: constraints.maxWidth / 4,
+                              child: _footerAboutColumn(context),
                             ),
-                            const SizedBox(height: 16),
-                            _FooterLink(
-                              label: 'Our Story',
-                              onTap: () => navigateToAbout(context),
+                            SizedBox(
+                              width: constraints.maxWidth / 4,
+                              child: _footerShopColumn(context),
                             ),
-                            _FooterLink(
-                              label: 'Mission & Values',
-                              onTap: placeholderCallbackForButtons,
+                            SizedBox(
+                              width: constraints.maxWidth / 4,
+                              child: _footerServiceColumn(),
                             ),
-                            _FooterLink(
-                              label: 'Team',
-                              onTap: placeholderCallbackForButtons,
-                            ),
-                            _FooterLink(
-                              label: 'Careers',
-                              onTap: placeholderCallbackForButtons,
+                            SizedBox(
+                              width: constraints.maxWidth / 4,
+                              child: _footerLegalColumn(),
                             ),
                           ],
-                        ),
-                        // Column 2: Shop
-                        Column(
+                        );
+                      } else {
+                        // Mobile: use Column for stacking
+                        return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text(
-                              'Shop',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            _FooterLink(
-                              label: 'All Products',
-                              onTap: () => navigateToProduct(context),
-                            ),
-                            _FooterLink(
-                              label: 'New Arrivals',
-                              onTap: placeholderCallbackForButtons,
-                            ),
-                            _FooterLink(
-                              label: 'Best Sellers',
-                              onTap: placeholderCallbackForButtons,
-                            ),
-                            _FooterLink(
-                              label: 'Sale',
-                              onTap: () =>
-                                  Navigator.pushNamed(context, '/sale'),
-                            ),
+                            _footerAboutColumn(context),
+                            const SizedBox(height: 32),
+                            _footerShopColumn(context),
+                            const SizedBox(height: 32),
+                            _footerServiceColumn(),
+                            const SizedBox(height: 32),
+                            _footerLegalColumn(),
                           ],
-                        ),
-                        // Column 3: Customer Service
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Customer Service',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            _FooterLink(
-                              label: 'Contact Us',
-                              onTap: placeholderCallbackForButtons,
-                            ),
-                            _FooterLink(
-                              label: 'Shipping Info',
-                              onTap: placeholderCallbackForButtons,
-                            ),
-                            _FooterLink(
-                              label: 'Returns',
-                              onTap: placeholderCallbackForButtons,
-                            ),
-                            _FooterLink(
-                              label: 'FAQ',
-                              onTap: placeholderCallbackForButtons,
-                            ),
-                          ],
-                        ),
-                        // Column 4: Legal & Social
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Legal & Social',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 0.5,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            _FooterLink(
-                              label: 'Privacy Policy',
-                              onTap: placeholderCallbackForButtons,
-                            ),
-                            _FooterLink(
-                              label: 'Terms of Service',
-                              onTap: placeholderCallbackForButtons,
-                            ),
-                            _FooterLink(
-                              label: 'Follow Us',
-                              onTap: placeholderCallbackForButtons,
-                            ),
-                            _FooterLink(
-                              label: 'Newsletter',
-                              onTap: placeholderCallbackForButtons,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                        );
+                      }
+                    },
                   ),
                   const SizedBox(height: 32),
                   // New text section: short blurb / contact info
@@ -456,7 +358,7 @@ class HomeScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Text(
                         'Union Shop is your campus store for branded merchandise, stationery and local gifts.'
-                        'Have questions? Email us at support@unionshop.gmail.com or call (01234) 567-890.',
+                        ' Have questions? Email us at support@unionshop.gmail.com or call (01234) 567-890.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           color: Colors.grey[400],
@@ -585,3 +487,214 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+
+// Add this widget at the end of the file:
+class _EmailSubscribeBox extends StatefulWidget {
+  @override
+  State<_EmailSubscribeBox> createState() => _EmailSubscribeBoxState();
+}
+
+class _EmailSubscribeBoxState extends State<_EmailSubscribeBox> {
+  final TextEditingController _controller = TextEditingController();
+  String? _message;
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void _subscribe() {
+    setState(() {
+      if (_controller.text.contains('@')) {
+        _message = 'Subscribed!';
+        _controller.clear();
+      } else {
+        _message = 'Please enter a valid email.';
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          width: 200,
+          child: TextField(
+            controller: _controller,
+            style: const TextStyle(fontSize: 13, color: Colors.black),
+            decoration: InputDecoration(
+              hintText: 'Enter your email',
+              hintStyle: const TextStyle(fontSize: 13),
+              filled: true,
+              fillColor: Colors.white,
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(4),
+                borderSide: BorderSide.none,
+              ),
+              isDense: true,
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.send, size: 18),
+                onPressed: _subscribe,
+              ),
+            ),
+            onSubmitted: (_) => _subscribe(),
+          ),
+        ),
+        if (_message != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Text(
+              _message!,
+              style: TextStyle(
+                color: _message == 'Subscribed!' ? Colors.green : Colors.red,
+                fontSize: 12,
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+// Helper widgets for footer columns:
+Widget _footerAboutColumn(BuildContext context) => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'About Us',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.5,
+          ),
+        ),
+        const SizedBox(height: 16),
+        _FooterLink(
+          label: 'Our Story',
+          onTap: () => Navigator.pushNamed(context, '/about'),
+        ),
+        _FooterLink(
+          label: 'Mission & Values',
+          onTap: () {},
+        ),
+        _FooterLink(
+          label: 'Team',
+          onTap: () {},
+        ),
+        _FooterLink(
+          label: 'Careers',
+          onTap: () {},
+        ),
+      ],
+    );
+
+Widget _footerShopColumn(BuildContext context) => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Shop',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.5,
+          ),
+        ),
+        const SizedBox(height: 16),
+        _FooterLink(
+          label: 'All Products',
+          onTap: () => Navigator.pushNamed(context, '/product'),
+        ),
+        _FooterLink(
+          label: 'New Arrivals',
+          onTap: () {},
+        ),
+        _FooterLink(
+          label: 'Sale',
+          onTap: () => Navigator.pushNamed(context, '/sale'),
+        ),
+        _FooterLink(
+          label: 'Search',
+          onTap: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Search clicked!')),
+            );
+          },
+        ),
+      ],
+    );
+
+Widget _footerServiceColumn() => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Customer Service',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.5,
+          ),
+        ),
+        const SizedBox(height: 16),
+        _FooterLink(label: 'Contact Us', onTap: () {}),
+        _FooterLink(label: 'Shipping Info', onTap: () {}),
+        _FooterLink(label: 'Returns', onTap: () {}),
+        _FooterLink(label: 'FAQ', onTap: () {}),
+        const SizedBox(height: 16),
+        const Text(
+          'Opening Hours',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.5,
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          'Mon-Fri: 9am - 5pm\nSat: 10am - 4pm\nSun: Closed',
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 13,
+          ),
+        ),
+      ],
+    );
+
+Widget _footerLegalColumn() => Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Legal & Social',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.5,
+          ),
+        ),
+        const SizedBox(height: 16),
+        _FooterLink(label: 'Privacy Policy', onTap: () {}),
+        _FooterLink(label: 'Terms of Service', onTap: () {}),
+        _FooterLink(label: 'Follow Us', onTap: () {}),
+        const SizedBox(height: 24),
+        const Text(
+          'Latest Offers',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 0.5,
+          ),
+        ),
+        const SizedBox(height: 8),
+        _EmailSubscribeBox(),
+      ],
+    );
