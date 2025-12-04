@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/app_header.dart';
+import 'package:union_shop/models/product.dart'; // Import your product model
 
 class CollectionDetailPage extends StatefulWidget {
   final String collectionName;
@@ -49,172 +50,51 @@ class _CollectionDetailPageState extends State<CollectionDetailPage> {
     }
   }
 
-  List<Map<String, dynamic>> _getCollectionProducts(String collectionName) {
+  // Map collection names to product lists from allProducts
+  List<Product> _getCollectionProducts(String collectionName) {
     switch (collectionName) {
       case 'Branded Merchandise':
-        return [
-          {
-            'title': 'Campus Hoodie',
-            'price': '£35.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-            'clothes': true,
-            'description':
-                'Warm and cozy hoodie with campus branding. Perfect for chilly days.',
-          },
-          {
-            'title': 'Branded Cap',
-            'price': '£15.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-            'clothes': true,
-            'description':
-                'Stylish cap featuring the university logo. Great for sunny days.',
-          },
-          {
-            'title': 'Logo T-Shirt',
-            'price': '£18.00',
-            'image': 'assets/branded_merch_1.png',
-            'clothes': true,
-            'description':
-                'Classic t-shirt with university logo. Comfortable for everyday wear.',
-          },
-        ];
+        return allProducts
+            .where((p) =>
+                p.title == 'Campus Hoodie' ||
+                p.title == 'Branded Cap' ||
+                p.title == 'Logo T-Shirt')
+            .toList();
       case 'Stationery':
-        return [
-          {
-            'title': 'Premium Notebook',
-            'price': '£8.50',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-            'clothes': false,
-            'description': 'High-quality notebook for notes and ideas.',
-          },
-          {
-            'title': 'Set of Pens',
-            'price': '£6.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-            'clothes': false,
-            'description': 'Smooth-writing pens in assorted colors.',
-          },
-          {
-            'title': 'Academic Planner',
-            'price': '£12.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-            'clothes': false,
-            'description': 'Organize your schedule with this academic planner.',
-          },
-        ];
+        return allProducts
+            .where((p) =>
+                p.title == 'Premium Notebook' ||
+                p.title == 'Set of Pens' ||
+                p.title == 'Academic Planner')
+            .toList();
       case 'Local Gifts':
-        return [
-          {
-            'title': 'Local Ceramic Mug',
-            'price': '£9.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-            'clothes': false,
-            'description': 'Ceramic mug featuring local artwork.',
-          },
-          {
-            'title': 'City Postcard Set',
-            'price': '£5.50',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-            'clothes': false,
-            'description': 'Set of postcards showcasing city landmarks.',
-          },
-          {
-            'title': 'Local Art Print',
-            'price': '£14.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-            'clothes': false,
-            'description': 'Beautiful print by a local artist.',
-          },
-        ];
+        return allProducts
+            .where((p) =>
+                p.title == 'Local Ceramic Mug' ||
+                p.title == 'City Postcard Set' ||
+                p.title == 'Local Art Print')
+            .toList();
       case 'Apparel':
-        return [
-          {
-            'title': 'Cotton T-Shirt',
-            'price': '£16.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-            'clothes': true,
-            'description': 'Soft cotton t-shirt for everyday comfort.',
-          },
-          {
-            'title': 'Joggers',
-            'price': '£28.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-            'clothes': true,
-            'description': 'Relaxed fit joggers for casual wear.',
-          },
-          {
-            'title': 'Crew Neck Sweatshirt',
-            'price': '£32.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-            'clothes': true,
-            'description': 'Classic crew neck sweatshirt with soft lining.',
-          },
-        ];
+        return allProducts
+            .where((p) =>
+                p.title == 'Cotton T-Shirt' ||
+                p.title == 'Joggers' ||
+                p.title == 'Crew Neck Sweatshirt')
+            .toList();
       case 'Accessories':
-        return [
-          {
-            'title': 'Canvas Backpack',
-            'price': '£42.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-            'clothes': false,
-            'description': 'Durable canvas backpack for books and essentials.',
-          },
-          {
-            'title': 'Wool Scarf',
-            'price': '£18.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-            'clothes': false,
-            'description': 'Warm wool scarf for chilly weather.',
-          },
-          {
-            'title': 'Phone Case',
-            'price': '£12.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-            'clothes': false,
-            'description': 'Protective phone case with stylish design.',
-          },
-        ];
+        return allProducts
+            .where((p) =>
+                p.title == 'Canvas Backpack' ||
+                p.title == 'Wool Scarf' ||
+                p.title == 'Phone Case')
+            .toList();
       case 'Home & Living':
-        return [
-          {
-            'title': 'Throw Pillow',
-            'price': '£22.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-            'clothes': false,
-            'description': 'Soft throw pillow for your sofa or bed.',
-          },
-          {
-            'title': 'Desk Lamp',
-            'price': '£35.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-            'clothes': false,
-            'description': 'Modern desk lamp for your workspace.',
-          },
-          {
-            'title': 'Bed Throw',
-            'price': '£40.00',
-            'image':
-                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-            'clothes': false,
-            'description': 'Cozy bed throw for extra warmth.',
-          },
-        ];
+        return allProducts
+            .where((p) =>
+                p.title == 'Throw Pillow' ||
+                p.title == 'Desk Lamp' ||
+                p.title == 'Bed Throw')
+            .toList();
       default:
         return [];
     }
@@ -225,26 +105,25 @@ class _CollectionDetailPageState extends State<CollectionDetailPage> {
     return double.tryParse(cleaned) ?? 0.0;
   }
 
-  List<Map<String, dynamic>> _sortedProducts(String collectionName) {
-    final products =
-        List<Map<String, dynamic>>.from(_getCollectionProducts(collectionName));
+  List<Product> _sortedProducts(String collectionName) {
+    final products = List<Product>.from(_getCollectionProducts(collectionName));
 
     switch (_sortOption) {
       case 'price_asc':
-        products.sort((a, b) => _priceFromString(a['price']!)
-            .compareTo(_priceFromString(b['price']!)));
+        products.sort((a, b) =>
+            _priceFromString(a.price).compareTo(_priceFromString(b.price)));
         break;
       case 'price_desc':
-        products.sort((a, b) => _priceFromString(b['price']!)
-            .compareTo(_priceFromString(a['price']!)));
+        products.sort((a, b) =>
+            _priceFromString(b.price).compareTo(_priceFromString(a.price)));
         break;
       case 'alpha_asc':
-        products.sort((a, b) =>
-            a['title']!.toLowerCase().compareTo(b['title']!.toLowerCase()));
+        products.sort(
+            (a, b) => a.title.toLowerCase().compareTo(b.title.toLowerCase()));
         break;
       case 'alpha_desc':
-        products.sort((a, b) =>
-            b['title']!.toLowerCase().compareTo(a['title']!.toLowerCase()));
+        products.sort(
+            (a, b) => b.title.toLowerCase().compareTo(a.title.toLowerCase()));
         break;
       case 'none':
       default:
@@ -256,11 +135,10 @@ class _CollectionDetailPageState extends State<CollectionDetailPage> {
   }
 
   // new: apply filter and search to a product list
-  List<Map<String, dynamic>> _applyFilters(
-      List<Map<String, dynamic>> products) {
+  List<Product> _applyFilters(List<Product> products) {
     final query = _searchQuery.trim().toLowerCase();
     return products.where((p) {
-      final price = _priceFromString(p['price']!);
+      final price = _priceFromString(p.price);
       // filter by selected price range
       switch (_filterOption) {
         case 'under_10':
@@ -280,7 +158,7 @@ class _CollectionDetailPageState extends State<CollectionDetailPage> {
           break;
       }
       // search by title
-      if (query.isNotEmpty && !p['title']!.toLowerCase().contains(query)) {
+      if (query.isNotEmpty && !p.title.toLowerCase().contains(query)) {
         return false;
       }
       return true;
@@ -450,11 +328,11 @@ class _CollectionDetailPageState extends State<CollectionDetailPage> {
                         children: products
                             .map(
                               (product) => _ProductCard(
-                                title: product['title']!,
-                                price: product['price']!,
-                                imageUrl: product['image']!,
-                                clothes: product['clothes']!,
-                                description: product['description']!,
+                                title: product.title,
+                                price: product.price,
+                                imageUrl: product.imageUrl,
+                                clothes: product.clothes,
+                                description: product.description,
                               ),
                             )
                             .toList(),
