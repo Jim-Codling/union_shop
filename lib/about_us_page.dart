@@ -18,7 +18,7 @@ class AboutUsPage extends StatelessWidget {
 
             // About Us Hero
             Container(
-              height: 300,
+              height: 400,
               color: Colors.white,
               child: Column(
                 children: [

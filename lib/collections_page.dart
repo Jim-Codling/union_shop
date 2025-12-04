@@ -148,26 +148,6 @@ class CollectionsPage extends StatelessWidget {
                           fontSize: 12,
                         ),
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            'Made with ',
-                            style: TextStyle(
-                              color: Colors.grey[400],
-                              fontSize: 12,
-                            ),
-                          ),
-                          const Icon(Icons.favorite,
-                              size: 12, color: Colors.red),
-                          Text(
-                            ' by Union Shop',
-                            style: TextStyle(
-                              color: Colors.grey[400],
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
-                      ),
                     ],
                   ),
                 ],
