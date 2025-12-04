@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:union_shop/widgets/app_header.dart';
 
 class CollectionDetailPage extends StatefulWidget {
   final String collectionName;
@@ -297,58 +298,16 @@ class _CollectionDetailPageState extends State<CollectionDetailPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header
+            const AppHeader(),
+            // Back button only
             Container(
-              height: 100,
               color: Colors.white,
-              child: Column(
-                children: [
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    color: const Color(0xFF4d2963),
-                    child: const Text(
-                      'PLACEHOLDER HEADER TEXT',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white, fontSize: 16),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () => Navigator.pushNamedAndRemoveUntil(
-                                context, '/', (route) => false),
-                            child: Image.network(
-                              'https://shop.upsu.net/cdn/shop/files/upsu_300x300.png?v=1614735854',
-                              height: 18,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Container(
-                                  color: Colors.grey[300],
-                                  width: 18,
-                                  height: 18,
-                                  child: const Center(
-                                    child: Icon(Icons.image_not_supported,
-                                        color: Colors.grey),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                          const Spacer(),
-                          IconButton(
-                            icon: const Icon(Icons.arrow_back,
-                                size: 18, color: Colors.grey),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              alignment: Alignment.centerLeft,
+              child: IconButton(
+                icon:
+                    const Icon(Icons.arrow_back, size: 18, color: Colors.grey),
+                onPressed: () => Navigator.pop(context),
               ),
             ),
 
