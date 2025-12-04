@@ -27,6 +27,7 @@ class _AppHeaderState extends State<AppHeader> {
     final links = [
       {'label': 'Home', 'route': '/'},
       {'label': 'Collections', 'route': '/collections'},
+      // We'll insert Print Shack here
       {'label': 'Sale', 'route': '/sale', 'color': Colors.red},
       {'label': 'About Us', 'route': '/about', 'color': Colors.grey},
     ];
@@ -34,15 +35,50 @@ class _AppHeaderState extends State<AppHeader> {
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              for (var link in links)
+              for (var i = 0; i < links.length; i++) ...[
                 TextButton(
-                  onPressed: () => _navigate(context, link['route'] as String),
+                  onPressed: () =>
+                      _navigate(context, links[i]['route'] as String),
                   style: TextButton.styleFrom(
-                    foregroundColor: link['color'] as Color? ?? Colors.black,
+                    foregroundColor:
+                        links[i]['color'] as Color? ?? Colors.black,
                     alignment: Alignment.centerLeft,
                   ),
-                  child: Text(link['label'] as String),
+                  child: Text(links[i]['label'] as String),
                 ),
+                if (i == 1) // After Collections, insert Print Shack dropdown
+                  PopupMenuButton<String>(
+                    padding: EdgeInsets.zero,
+                    child: const Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                        child: Text('The Print Shack',
+                            style:
+                                TextStyle(fontSize: 14, color: Colors.black)),
+                      ),
+                    ),
+                    onSelected: (value) {
+                      if (value == 'about') {
+                        Navigator.pushNamed(context, '/print-shack-about');
+                      } else if (value == 'personalisation') {
+                        Navigator.pushNamed(
+                            context, '/print-shack-personalisation');
+                      }
+                    },
+                    itemBuilder: (context) => [
+                      const PopupMenuItem(
+                        value: 'about',
+                        child: Text('About'),
+                      ),
+                      const PopupMenuItem(
+                        value: 'personalisation',
+                        child: Text('Personalisation'),
+                      ),
+                    ],
+                  ),
+              ],
             ],
           )
         : Row(
@@ -58,7 +94,41 @@ class _AppHeaderState extends State<AppHeader> {
                   ),
                   child: Text(links[i]['label'] as String),
                 ),
-                if (i != links.length - 1) const SizedBox(width: 16),
+                if (i == 1) // After Collections, insert Print Shack dropdown
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 2), // Reduced padding
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+                        hint: const Text('The Print Shack',
+                            style: TextStyle(color: Colors.black)),
+                        icon: const Icon(Icons.arrow_drop_down,
+                            color: Colors.black),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 14),
+                        items: const [
+                          DropdownMenuItem(
+                            value: 'about',
+                            child: Text('About'),
+                          ),
+                          DropdownMenuItem(
+                            value: 'personalisation',
+                            child: Text('Personalisation'),
+                          ),
+                        ],
+                        onChanged: (value) {
+                          if (value == 'about') {
+                            Navigator.pushNamed(context, '/print-shack-about');
+                          } else if (value == 'personalisation') {
+                            Navigator.pushNamed(
+                                context, '/print-shack-personalisation');
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                if (i != links.length - 1)
+                  const SizedBox(width: 2), // Reduced spacing
               ],
             ],
           );
@@ -92,6 +162,7 @@ class _AppHeaderState extends State<AppHeader> {
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
                   children: [
+                    // Logo
                     GestureDetector(
                       onTap: () {
                         _navigate(context, '/');
@@ -113,71 +184,92 @@ class _AppHeaderState extends State<AppHeader> {
                         },
                       ),
                     ),
-                    const Spacer(),
+                    // Center the nav links
+                    Expanded(
+                      child: LayoutBuilder(
+                        builder: (context, constraints) {
+                          // Calculate max width for nav links to avoid overflow
+                          double maxNavWidth = constraints.maxWidth > 500
+                              ? 500
+                              : constraints.maxWidth - 32;
+                          return Center(
+                            child: SizedBox(
+                              width: maxNavWidth,
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    if (!isMobile) _buildNavLinks(context),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    // Action icons
                     if (!isMobile)
-                      ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 480),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            _buildNavLinks(context),
-                            const Spacer(),
-                            IconButton(
-                              icon: const Icon(
-                                Icons.search,
-                                size: 18,
-                                color: Colors.grey,
-                              ),
-                              padding: const EdgeInsets.all(8),
-                              constraints: const BoxConstraints(
-                                minWidth: 32,
-                                minHeight: 32,
-                              ),
-                              onPressed: _placeholderCallback,
+                      Row(
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons.search,
+                              size: 18,
+                              color: Colors.grey,
                             ),
-                            IconButton(
-                              icon: const Icon(
-                                Icons.person_outline,
-                                size: 18,
-                                color: Colors.grey,
-                              ),
-                              padding: const EdgeInsets.all(8),
-                              constraints: const BoxConstraints(
-                                minWidth: 32,
-                                minHeight: 32,
-                              ),
-                              onPressed: () => Navigator.pushNamed(context, '/login'),
+                            padding: const EdgeInsets.all(8),
+                            constraints: const BoxConstraints(
+                              minWidth: 32,
+                              minHeight: 32,
                             ),
-                            IconButton(
-                              icon: const Icon(
-                                Icons.shopping_bag_outlined,
-                                size: 18,
-                                color: Colors.grey,
-                              ),
-                              padding: const EdgeInsets.all(8),
-                              constraints: const BoxConstraints(
-                                minWidth: 32,
-                                minHeight: 32,
-                              ),
-                              onPressed: () => Navigator.pushNamed(context, '/shopping-bag'),
+                            onPressed: _placeholderCallback,
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.person_outline,
+                              size: 18,
+                              color: Colors.grey,
                             ),
-                            IconButton(
-                              icon: const Icon(
-                                Icons.menu,
-                                size: 18,
-                                color: Colors.grey,
-                              ),
-                              padding: const EdgeInsets.all(8),
-                              constraints: const BoxConstraints(
-                                minWidth: 32,
-                                minHeight: 32,
-                              ),
-                              onPressed: _placeholderCallback,
+                            padding: const EdgeInsets.all(8),
+                            constraints: const BoxConstraints(
+                              minWidth: 32,
+                              minHeight: 32,
                             ),
-                          ],
-                        ),
-                      )
-                    else
+                            onPressed: () =>
+                                Navigator.pushNamed(context, '/login'),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.shopping_bag_outlined,
+                              size: 18,
+                              color: Colors.grey,
+                            ),
+                            padding: const EdgeInsets.all(8),
+                            constraints: const BoxConstraints(
+                              minWidth: 32,
+                              minHeight: 32,
+                            ),
+                            onPressed: () =>
+                                Navigator.pushNamed(context, '/shopping-bag'),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.menu,
+                              size: 18,
+                              color: Colors.grey,
+                            ),
+                            padding: const EdgeInsets.all(8),
+                            constraints: const BoxConstraints(
+                              minWidth: 32,
+                              minHeight: 32,
+                            ),
+                            onPressed: _placeholderCallback,
+                          ),
+                        ],
+                      ),
+                    if (isMobile)
                       Row(
                         children: [
                           IconButton(

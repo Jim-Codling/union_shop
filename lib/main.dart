@@ -7,6 +7,8 @@ import 'package:union_shop/sale_page.dart';
 import 'package:union_shop/widgets/app_header.dart';
 import 'package:union_shop/login_page.dart';
 import 'package:union_shop/shopping_bag_page.dart';
+import 'package:union_shop/print_shack_about_page.dart';
+import 'package:union_shop/print_shack_personalisation_page.dart';
 import 'dart:math';
 
 void main() {
@@ -45,6 +47,9 @@ class UnionShopApp extends StatelessWidget {
         },
         '/login': (context) => const LoginPage(),
         '/shopping-bag': (context) => const ShoppingBagPage(),
+        '/print-shack-about': (context) => const PrintShackAboutPage(),
+        '/print-shack-personalisation': (context) =>
+            const PrintShackPersonalisationPage(),
       },
     );
   }
