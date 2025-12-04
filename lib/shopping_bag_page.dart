@@ -80,12 +80,29 @@ class ShoppingBagPage extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            item['title']?.toString() ?? '',
-                                            style: const TextStyle(
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600,
-                                            ),
+                                          Row(
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  item['title']?.toString() ??
+                                                      '',
+                                                  style: const TextStyle(
+                                                    fontSize: 18,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                icon: const Icon(Icons.delete,
+                                                    color: Colors.red),
+                                                tooltip: 'Remove',
+                                                onPressed: () {
+                                                  setState(() {
+                                                    cartItems.removeAt(index);
+                                                  });
+                                                },
+                                              ),
+                                            ],
                                           ),
                                           const SizedBox(height: 6),
                                           Text(
