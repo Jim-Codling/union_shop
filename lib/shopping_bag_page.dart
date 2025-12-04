@@ -96,6 +96,17 @@ class ShoppingBagPage extends StatelessWidget {
                                         Text('Size: ${item['size']}'),
                                       if (item.containsKey('color'))
                                         Text('Colour: ${item['color']}'),
+                                      if (item.containsKey('customText') &&
+                                          item['customText'] is List)
+                                        ...List.generate(
+                                          (item['customText'] as List).length,
+                                          (i) => Text(
+                                            'Line ${i + 1}: ${(item['customText'] as List)[i]}',
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black87),
+                                          ),
+                                        ),
                                     ],
                                   ),
                                 ),
