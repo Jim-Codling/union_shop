@@ -8,8 +8,6 @@ class AppHeader extends StatefulWidget {
 }
 
 class _AppHeaderState extends State<AppHeader> {
-  void _placeholderCallback() {}
-
   bool _showMobileMenu = false;
 
   void _navigate(BuildContext context, String route) {
@@ -21,6 +19,10 @@ class _AppHeaderState extends State<AppHeader> {
     } else {
       Navigator.pushNamed(context, route);
     }
+  }
+
+  void _openSearch(BuildContext context) {
+    Navigator.pushNamed(context, '/search');
   }
 
   Widget _buildNavLinks(BuildContext context, {bool isVertical = false}) {
@@ -224,7 +226,7 @@ class _AppHeaderState extends State<AppHeader> {
                               minWidth: 32,
                               minHeight: 32,
                             ),
-                            onPressed: _placeholderCallback,
+                            onPressed: () => _openSearch(context),
                           ),
                           IconButton(
                             icon: const Icon(
@@ -326,7 +328,9 @@ class _AppHeaderState extends State<AppHeader> {
                           PopupMenuButton<String>(
                             icon: const Icon(Icons.menu, color: Colors.grey),
                             onSelected: (value) {
-                              if (value == 'printshack_about') {
+                              if (value == '/search') {
+                                _openSearch(context);
+                              } else if (value == 'printshack_about') {
                                 Navigator.pushNamed(
                                     context, '/print-shack-about');
                               } else if (value ==
@@ -372,10 +376,10 @@ class _AppHeaderState extends State<AppHeader> {
                                 value: '/sale',
                                 child: Text('Sale'),
                               ),
-                              // const PopupMenuItem(
-                              //   value: '/about',
-                              //   child: Text('About Us'),
-                              // ),
+                              const PopupMenuItem(
+                                value: '/search',
+                                child: Text('Search'),
+                              ),
                               const PopupMenuItem(
                                 value: '/login',
                                 child: Text('Log In'),

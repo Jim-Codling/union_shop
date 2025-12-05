@@ -9,6 +9,7 @@ import 'package:union_shop/login_page.dart';
 import 'package:union_shop/shopping_bag_page.dart';
 import 'package:union_shop/print_shack_about_page.dart';
 import 'package:union_shop/print_shack_personalisation_page.dart';
+import 'package:union_shop/search_page.dart';
 import 'dart:math';
 
 void main() {
@@ -50,6 +51,7 @@ class UnionShopApp extends StatelessWidget {
         '/print-shack-about': (context) => const PrintShackAboutPage(),
         '/print-shack-personalisation': (context) =>
             const PrintShackPersonalisationPage(),
+        '/search': (context) => const SearchPage(),
       },
     );
   }
@@ -621,11 +623,7 @@ Widget _footerShopColumn(BuildContext context) => Column(
         ),
         _FooterLink(
           label: 'Search',
-          onTap: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Search clicked!')),
-            );
-          },
+          onTap: () => Navigator.pushNamed(context, '/search'),
         ),
       ],
     );
