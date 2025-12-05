@@ -90,39 +90,36 @@ class SalePage extends StatelessWidget {
                     _SaleItemCard(
                       title: 'Union Hoodie — Sale',
                       price: '£22.00',
-                      imageUrl:
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                      imageUrl: 'assets/branded_merch_2.png',
                       onTap: () => navigateToProduct(
                         context,
                         'Union Hoodie — Sale',
                         '£22.00',
-                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                        'assets/branded_merch_2.png',
                         'A classic union hoodie now on sale. Soft, warm, and perfect for campus life.',
                       ),
                     ),
                     _SaleItemCard(
                       title: 'Campus Mug — Sale',
                       price: '£7.50',
-                      imageUrl:
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                      imageUrl: 'assets/local_gifts_2.png',
                       onTap: () => navigateToProduct(
                         context,
                         'Campus Mug — Sale',
                         '£7.50',
-                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                        'assets/local_gifts_2.png',
                         'Enjoy your favourite drinks in this campus mug, now at a special sale price.',
                       ),
                     ),
                     _SaleItemCard(
                       title: 'Notebook Pack — Sale',
                       price: '£5.00',
-                      imageUrl:
-                          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                      imageUrl: 'assets/stationary_2.png',
                       onTap: () => navigateToProduct(
                         context,
                         'Notebook Pack — Sale',
                         '£5.00',
-                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                        'assets/stationary_2.png',
                         'Pack of notebooks for your study needs, now discounted for a limited time.',
                       ),
                     ),

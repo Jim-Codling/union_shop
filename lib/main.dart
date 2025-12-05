@@ -90,8 +90,7 @@ class HomeScreen extends StatelessWidget {
         {
           'title': 'Campus Hoodie',
           'price': '£35.00',
-          'imageUrl':
-              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+          'imageUrl': 'assets/branded_merch_2.png',
           'description':
               'Warm and cozy hoodie with campus branding. Perfect for chilly days.',
           'colors': ['Grey', 'Black'],
@@ -100,8 +99,7 @@ class HomeScreen extends StatelessWidget {
         {
           'title': 'Premium Notebook',
           'price': '£8.50',
-          'imageUrl':
-              'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+          'imageUrl': 'assets/stationary_2.png',
           'description': 'High-quality notebook for notes and ideas.',
         },
         {

@@ -66,7 +66,6 @@ class _SearchPageState extends State<SearchPage> {
                               'colors': product.colors,
                               'sizes': product.sizes,
                               'clothes': product.clothes,
-                              'url': product.url,
                             },
                           );
                         },
