@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/app_header.dart';
 import 'package:union_shop/shopping_bag_page.dart';
+import 'package:union_shop/models/product.dart'; // Import the product model
 
 class PrintShackPersonalisationPage extends StatefulWidget {
   const PrintShackPersonalisationPage({super.key});
@@ -21,6 +22,10 @@ class _PrintShackPersonalisationPageState
     TextEditingController(),
   ];
 
+  Product get hoodie => allProducts.firstWhere(
+        (p) => p.title == 'Custom Print Shack Hoodie',
+      );
+
   @override
   void dispose() {
     for (final c in _controllers) {
@@ -31,13 +36,17 @@ class _PrintShackPersonalisationPageState
 
   void _addToCart() {
     final lines = _controllers.take(_numLines).map((c) => c.text).toList();
+    // Convert price string (e.g. "£40.00") to double
+    final priceValue = double.tryParse(
+          hoodie.price.replaceAll(RegExp(r'[^\d.]'), ''),
+        ) ??
+        0.0;
     cartItems.add({
-      'title': 'Custom Print Shack Hoodie',
-      'price': 40.00,
+      'title': hoodie.title,
+      'price': priceValue,
       'quantity': _quantity,
       'customText': lines,
-      'imageUrl':
-          'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+      'imageUrl': hoodie.imageUrl,
     });
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Custom hoodie added to cart!')),
@@ -70,7 +79,7 @@ class _PrintShackPersonalisationPageState
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(12),
                                 child: Image.network(
-                                  'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                                  hoodie.imageUrl,
                                   width: 180,
                                   height: 180,
                                   fit: BoxFit.cover,
@@ -87,15 +96,24 @@ class _PrintShackPersonalisationPageState
                               ),
                             ),
                             const SizedBox(height: 20),
-                            const Text(
-                              'Custom Hoodie',
-                              style: TextStyle(
+                            Text(
+                              hoodie.title,
+                              style: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(height: 8),
-                            const Text(
-                              'Create your own personalised hoodie! Choose up to 4 lines of custom text to be printed on your hoodie. Perfect for gifts, societies, or showing your unique style.',
-                              style: TextStyle(fontSize: 15),
+                            Text(
+                              hoodie.description,
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              hoodie.price,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Color(0xFF4d2963),
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             const SizedBox(height: 16),
                             Row(
@@ -177,7 +195,7 @@ class _PrintShackPersonalisationPageState
                             ClipRRect(
                               borderRadius: BorderRadius.circular(12),
                               child: Image.network(
-                                'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                                hoodie.imageUrl,
                                 width: 180,
                                 height: 180,
                                 fit: BoxFit.cover,
@@ -197,16 +215,25 @@ class _PrintShackPersonalisationPageState
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  const Text(
-                                    'Custom Hoodie',
-                                    style: TextStyle(
+                                  Text(
+                                    hoodie.title,
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(height: 8),
-                                  const Text(
-                                    'Create your own personalised hoodie! Choose up to 4 lines of custom text to be printed on your hoodie. Perfect for gifts, societies, or showing your unique style.',
-                                    style: TextStyle(fontSize: 15),
+                                  Text(
+                                    hoodie.description,
+                                    style: const TextStyle(fontSize: 15),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    hoodie.price,
+                                    style: const TextStyle(
+                                      fontSize: 18,
+                                      color: Color(0xFF4d2963),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                   const SizedBox(height: 16),
                                   Row(
