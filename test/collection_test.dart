@@ -24,5 +24,22 @@ void main() {
         expect(collection.description.isNotEmpty, true);
       }
     });
+
+    test('All collection titles are unique', () {
+      final titles = allCollections.map((c) => c.title).toSet();
+      expect(titles.length, allCollections.length);
+    });
+
+    test('No collection has a blank imageUrl', () {
+      for (final collection in allCollections) {
+        expect(collection.imageUrl.trim().isNotEmpty, true);
+      }
+    });
+
+    test('No collection has a blank description', () {
+      for (final collection in allCollections) {
+        expect(collection.description.trim().isNotEmpty, true);
+      }
+    });
   });
 }

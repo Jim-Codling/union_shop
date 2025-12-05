@@ -2,26 +2,26 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:union_shop/models/collections.dart';
 
 void main() {
-  group('Collections Model Tests', () {
-    test('Collections list is not empty', () {
-      expect(allCollections.isNotEmpty, true);
+  group('Collection Model Tests', () {
+    test('Collections list contains Sale collection', () {
+      expect(allCollections.any((c) => c.title == 'Sale'), true);
     });
 
-    test('Each collection has a title', () {
+    test('No collection has an empty title', () {
       for (final collection in allCollections) {
-        expect(collection.title.isNotEmpty, true);
+        expect(collection.title.trim().isNotEmpty, true);
       }
     });
 
-    test('Each collection has an imageUrl', () {
+    test('No collection has an empty imageUrl', () {
       for (final collection in allCollections) {
-        expect(collection.imageUrl.isNotEmpty, true);
+        expect(collection.imageUrl.trim().isNotEmpty, true);
       }
     });
 
-    test('Each collection has a description', () {
+    test('No collection has an empty description', () {
       for (final collection in allCollections) {
-        expect(collection.description.isNotEmpty, true);
+        expect(collection.description.trim().isNotEmpty, true);
       }
     });
   });

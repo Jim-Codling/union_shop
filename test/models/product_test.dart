@@ -3,31 +3,27 @@ import 'package:union_shop/models/product.dart';
 
 void main() {
   group('Product Model Tests', () {
-    test('Product list is not empty', () {
-      expect(allProducts.isNotEmpty, true);
-    });
-
-    test('Each product has a title', () {
+    test('All product prices start with £', () {
       for (final product in allProducts) {
-        expect(product.title.isNotEmpty, true);
+        expect(product.price.startsWith('£'), true);
       }
     });
 
-    test('Each product has a price', () {
+    test('No product has an empty title', () {
       for (final product in allProducts) {
-        expect(product.price.isNotEmpty, true);
+        expect(product.title.trim().isNotEmpty, true);
       }
     });
 
-    test('Each product has an imageUrl', () {
+    test('No product has an empty imageUrl', () {
       for (final product in allProducts) {
-        expect(product.imageUrl.isNotEmpty, true);
+        expect(product.imageUrl.trim().isNotEmpty, true);
       }
     });
 
-    test('Each product has a description', () {
+    test('No product has an empty description', () {
       for (final product in allProducts) {
-        expect(product.description.isNotEmpty, true);
+        expect(product.description.trim().isNotEmpty, true);
       }
     });
   });
