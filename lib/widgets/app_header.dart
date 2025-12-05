@@ -372,6 +372,18 @@ class _AppHeaderState extends State<AppHeader> {
                                 value: '/sale',
                                 child: Text('Sale'),
                               ),
+                              // const PopupMenuItem(
+                              //   value: '/about',
+                              //   child: Text('About Us'),
+                              // ),
+                              const PopupMenuItem(
+                                value: '/login',
+                                child: Text('Log In'),
+                              ),
+                              const PopupMenuItem(
+                                value: '/shopping-bag',
+                                child: Text('Shopping Cart'),
+                              ),
                               const PopupMenuItem(
                                 value: '/about',
                                 child: Text('About Us'),
