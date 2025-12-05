@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/app_header.dart';
+import 'package:union_shop/models/collections.dart'; // Import the collections model
 
 class CollectionsPage extends StatelessWidget {
   const CollectionsPage({super.key});
@@ -66,42 +67,13 @@ class CollectionsPage extends StatelessWidget {
                   mainAxisSpacing: 24,
                   childAspectRatio: 0.85,
                   children: [
-                    _CollectionCard(
-                      title: 'Branded Merchandise',
-                      imageUrl: 'assets/branded_merch_1.png',
-                      onTap: () => navigateToCollectionDetail(
-                          context, 'Branded Merchandise'),
-                    ),
-                    _CollectionCard(
-                      title: 'Stationery',
-                      imageUrl: 'assets/stationary_1.png',
-                      onTap: () =>
-                          navigateToCollectionDetail(context, 'Stationery'),
-                    ),
-                    _CollectionCard(
-                      title: 'Local Gifts',
-                      imageUrl: 'assets/local_gifts_1.png',
-                      onTap: () =>
-                          navigateToCollectionDetail(context, 'Local Gifts'),
-                    ),
-                    _CollectionCard(
-                      title: 'Apparel',
-                      imageUrl: 'assets/apparel_1.png',
-                      onTap: () =>
-                          navigateToCollectionDetail(context, 'Apparel'),
-                    ),
-                    _CollectionCard(
-                      title: 'Accessories',
-                      imageUrl: 'assets/accessories_1.png',
-                      onTap: () =>
-                          navigateToCollectionDetail(context, 'Accessories'),
-                    ),
-                    _CollectionCard(
-                      title: 'Home & Living',
-                      imageUrl: 'assets/home_and_living_1.png',
-                      onTap: () =>
-                          navigateToCollectionDetail(context, 'Home & Living'),
-                    ),
+                    for (final collection in allCollections)
+                      _CollectionCard(
+                        title: collection.title,
+                        imageUrl: collection.imageUrl,
+                        onTap: () => navigateToCollectionDetail(
+                            context, collection.title),
+                      ),
                   ],
                 ),
               ),
@@ -214,9 +186,8 @@ class _CollectionCardState extends State<_CollectionCard> {
                     // Overlay on hover
                     Container(
                       decoration: BoxDecoration(
-                        color: Colors.black.withValues(
-                          alpha: _isHovered ? 0.3 : 0.0,
-                        ),
+                        // ignore: deprecated_member_use
+                        color: Colors.black.withOpacity(_isHovered ? 0.3 : 0.0),
                       ),
                     ),
                   ],
