@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:union_shop/widgets/app_header.dart';
+import 'package:union_shop/product_detail_page.dart';
 
 class SalePage extends StatelessWidget {
   const SalePage({super.key});
@@ -8,8 +9,19 @@ class SalePage extends StatelessWidget {
     Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
   }
 
-  void navigateToProduct(BuildContext context) {
-    Navigator.pushNamed(context, '/product');
+  void navigateToProduct(BuildContext context, String title, String price,
+      String imageUrl, String description) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => ProductDetailPage(
+          title: title,
+          price: price,
+          imageUrl: imageUrl,
+          description: description,
+        ),
+      ),
+    );
   }
 
   @override
@@ -30,7 +42,9 @@ class SalePage extends StatelessWidget {
                   Text(
                     'Seasonal Sale',
                     style: TextStyle(
-                        fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                   SizedBox(height: 8),
                   Text(
@@ -44,27 +58,31 @@ class SalePage extends StatelessWidget {
 
             // Sale description
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 20),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 24.0, horizontal: 20),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 1000),
                 child: const Text(
                   'Browse discounted items below. Prices shown are the sale prices. '
                   'Click any item to view product details.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 15, color: Colors.black87, height: 1.4),
+                  style: TextStyle(
+                      fontSize: 15, color: Colors.black87, height: 1.4),
                 ),
               ),
             ),
 
             // Sale items grid
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 1200),
                 child: GridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: MediaQuery.of(context).size.width > 900 ? 3 : 2,
+                  crossAxisCount:
+                      MediaQuery.of(context).size.width > 900 ? 3 : 2,
                   crossAxisSpacing: 20,
                   mainAxisSpacing: 20,
                   childAspectRatio: 0.78,
@@ -74,21 +92,39 @@ class SalePage extends StatelessWidget {
                       price: '£22.00',
                       imageUrl:
                           'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                      onTap: () => navigateToProduct(context),
+                      onTap: () => navigateToProduct(
+                        context,
+                        'Union Hoodie — Sale',
+                        '£22.00',
+                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                        'A classic union hoodie now on sale. Soft, warm, and perfect for campus life.',
+                      ),
                     ),
                     _SaleItemCard(
                       title: 'Campus Mug — Sale',
                       price: '£7.50',
                       imageUrl:
                           'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
-                      onTap: () => navigateToProduct(context),
+                      onTap: () => navigateToProduct(
+                        context,
+                        'Campus Mug — Sale',
+                        '£7.50',
+                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityPostcard2_1024x1024@2x.jpg?v=1752232561',
+                        'Enjoy your favourite drinks in this campus mug, now at a special sale price.',
+                      ),
                     ),
                     _SaleItemCard(
                       title: 'Notebook Pack — Sale',
                       price: '£5.00',
                       imageUrl:
                           'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
-                      onTap: () => navigateToProduct(context),
+                      onTap: () => navigateToProduct(
+                        context,
+                        'Notebook Pack — Sale',
+                        '£5.00',
+                        'https://shop.upsu.net/cdn/shop/files/PortsmouthCityMagnet1_1024x1024@2x.jpg?v=1752230282',
+                        'Pack of notebooks for your study needs, now discounted for a limited time.',
+                      ),
                     ),
                   ],
                 ),
@@ -98,7 +134,8 @@ class SalePage extends StatelessWidget {
             const SizedBox(height: 32),
             // Small CTA
             ElevatedButton(
-              onPressed: () => Navigator.pushNamedAndRemoveUntil(context, '/', (r) => false),
+              onPressed: () =>
+                  Navigator.pushNamedAndRemoveUntil(context, '/', (r) => false),
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF4d2963),
                 foregroundColor: Colors.white,
@@ -158,9 +195,13 @@ class _SaleItemCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title, style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600)),
+                  Text(title,
+                      style: const TextStyle(
+                          fontSize: 14, fontWeight: FontWeight.w600)),
                   const SizedBox(height: 6),
-                  Text(price, style: const TextStyle(fontSize: 13, color: Colors.deepPurple)),
+                  Text(price,
+                      style: const TextStyle(
+                          fontSize: 13, color: Colors.deepPurple)),
                 ],
               ),
             ),
