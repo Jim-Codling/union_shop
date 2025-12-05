@@ -151,7 +151,7 @@ class _AppHeaderState extends State<AppHeader> {
               padding: const EdgeInsets.symmetric(vertical: 8),
               color: const Color(0xFF4d2963),
               child: const Text(
-                'PLACEHOLDER HEADER TEXT',
+                'SHOP NOW FOR UNIVERSITY MERCHANDISE',
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
@@ -254,7 +254,7 @@ class _AppHeaderState extends State<AppHeader> {
                             onPressed: () =>
                                 Navigator.pushNamed(context, '/shopping-bag'),
                           ),
-                          IconButton(
+                          PopupMenuButton(
                             icon: const Icon(
                               Icons.menu,
                               size: 18,
@@ -265,20 +265,118 @@ class _AppHeaderState extends State<AppHeader> {
                               minWidth: 32,
                               minHeight: 32,
                             ),
-                            onPressed: _placeholderCallback,
+                            onSelected: (value) {
+                              if (value == 'printshack_about') {
+                                Navigator.pushNamed(
+                                    context, '/print-shack-about');
+                              } else if (value ==
+                                  'printshack_personalisation') {
+                                Navigator.pushNamed(
+                                    context, '/print-shack-personalisation');
+                              } else {
+                                _navigate(context, value as String);
+                              }
+                            },
+                            itemBuilder: (context) => [
+                              const PopupMenuItem(
+                                value: '/',
+                                child: Text('Home'),
+                              ),
+                              const PopupMenuItem(
+                                value: '/collections',
+                                child: Text('Collections'),
+                              ),
+                              const PopupMenuItem(
+                                value: 'printshack_header',
+                                enabled: false,
+                                child: Text(
+                                  'The Print Shack',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              const PopupMenuItem(
+                                value: 'printshack_about',
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 16.0),
+                                  child: Text('About'),
+                                ),
+                              ),
+                              const PopupMenuItem(
+                                value: 'printshack_personalisation',
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 16.0),
+                                  child: Text('Personalisation'),
+                                ),
+                              ),
+                              const PopupMenuItem(
+                                value: '/sale',
+                                child: Text('Sale'),
+                              ),
+                              const PopupMenuItem(
+                                value: '/about',
+                                child: Text('About Us'),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     if (isMobile)
                       Row(
                         children: [
-                          IconButton(
+                          PopupMenuButton<String>(
                             icon: const Icon(Icons.menu, color: Colors.grey),
-                            onPressed: () {
-                              setState(() {
-                                _showMobileMenu = !_showMobileMenu;
-                              });
+                            onSelected: (value) {
+                              if (value == 'printshack_about') {
+                                Navigator.pushNamed(
+                                    context, '/print-shack-about');
+                              } else if (value ==
+                                  'printshack_personalisation') {
+                                Navigator.pushNamed(
+                                    context, '/print-shack-personalisation');
+                              } else {
+                                _navigate(context, value);
+                              }
                             },
+                            itemBuilder: (context) => [
+                              const PopupMenuItem(
+                                value: '/',
+                                child: Text('Home'),
+                              ),
+                              const PopupMenuItem(
+                                value: '/collections',
+                                child: Text('Collections'),
+                              ),
+                              const PopupMenuItem(
+                                value: 'printshack_header',
+                                enabled: false,
+                                child: Text(
+                                  'The Print Shack',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              const PopupMenuItem(
+                                value: 'printshack_about',
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 16.0),
+                                  child: Text('About'),
+                                ),
+                              ),
+                              const PopupMenuItem(
+                                value: 'printshack_personalisation',
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 16.0),
+                                  child: Text('Personalisation'),
+                                ),
+                              ),
+                              const PopupMenuItem(
+                                value: '/sale',
+                                child: Text('Sale'),
+                              ),
+                              const PopupMenuItem(
+                                value: '/about',
+                                child: Text('About Us'),
+                              ),
+                            ],
                           ),
                         ],
                       ),
